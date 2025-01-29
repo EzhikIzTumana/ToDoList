@@ -3,6 +3,8 @@ import SwiftUI
 struct NewItemView: View {
     @StateObject var viewModel = NewItemViewViewModel()
     @Binding var newItemPresented: Bool
+    var listViewModel: ToDoListViewViewModel
+    
     var body: some View {
         VStack {
             Text("New Item")
@@ -16,8 +18,9 @@ struct NewItemView: View {
                     .datePickerStyle(GraphicalDatePickerStyle())
                 
                 Button("Save"){
-                    viewModel.save()
-                    newItemPresented = false
+                    let newItem = ToDoListItem(dueDate: viewModel.dueDate.timeIntervalSince1970, title: viewModel.title)
+                        listViewModel.addItem(newItem) // Добавляем задачу в список
+                        newItemPresented = false
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
             }
@@ -27,9 +30,5 @@ struct NewItemView: View {
 }
 
 #Preview {
-    NewItemView(newItemPresented: Binding(get: {
-        return true
-    }, set: { _ in
-        
-    }))
+    NewItemView(newItemPresented: .constant(true), listViewModel: ToDoListViewViewModel())
 }

@@ -12,7 +12,29 @@ struct ToDoListView: View {
     var body: some View {
         NavigationView{
             VStack {
-                
+                List(viewModel.items) { item in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(item.title)
+                                .font(.headline)
+                            Text("\(Date(timeIntervalSince1970: item.dueDate).formatted(date: .abbreviated, time: .shortened))")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                        Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
+                            .foregroundColor(item.isCompleted ? .green : .gray)
+                    }
+                    .swipeActions{
+                        Button{
+                            viewModel.deleteItem(id: item.id)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                                .tint(.red)
+                        }
+                    }
+                }
+                .listStyle(PlainListStyle())
             }
             .navigationTitle("To Do List")
             .toolbar{
@@ -22,9 +44,9 @@ struct ToDoListView: View {
                     Image(systemName: "plus")
                 }
             }
-            .sheet(isPresented: $viewModel.showingNewItemView){
-                NewItemView(newItemPresented: $viewModel.showingNewItemView)
-            }
+            .sheet(isPresented: $viewModel.showingNewItemView) {
+                        NewItemView(newItemPresented: $viewModel.showingNewItemView, listViewModel: viewModel)
+                        }
                 
         }
     }

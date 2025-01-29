@@ -8,6 +8,18 @@
 import Foundation
 
 class ToDoListViewViewModel: ObservableObject{
+    @Published var items: [ToDoListItem] = []
     @Published var showingNewItemView = false
+    
+    func addItem(_ item: ToDoListItem) {
+        items.append(item)
+    }
+    
+    func deleteItem(id: UUID) {
+        items.removeAll { item in
+            item.id == id
+        }
+    }
+    
     init() {}
 }
