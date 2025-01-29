@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NewItemView: View {
     @StateObject var viewModel = NewItemViewViewModel()
+    @Binding var newItemPresented: Bool
     var body: some View {
         VStack {
             Text("New Item")
@@ -16,6 +17,7 @@ struct NewItemView: View {
                 
                 Button("Save"){
                     viewModel.save()
+                    newItemPresented = false
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
             }
@@ -25,5 +27,9 @@ struct NewItemView: View {
 }
 
 #Preview {
-    NewItemView()
+    NewItemView(newItemPresented: Binding(get: {
+        return true
+    }, set: { _ in
+        
+    }))
 }
