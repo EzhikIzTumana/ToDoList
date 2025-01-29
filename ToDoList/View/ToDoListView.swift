@@ -24,6 +24,9 @@ struct ToDoListView: View {
                         Spacer()
                         Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
                             .foregroundColor(item.isCompleted ? .green : .gray)
+                            .onTapGesture {
+                                viewModel.toggleIsDone(id: item.id)
+                            }
                     }
                     .swipeActions{
                         Button{

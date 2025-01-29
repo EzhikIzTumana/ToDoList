@@ -21,5 +21,12 @@ class ToDoListViewViewModel: ObservableObject{
         }
     }
     
+    func toggleIsDone(id: UUID) {
+        if let index = items.firstIndex(where: { $0.id == id }) {
+            items[index].isCompleted.toggle()
+        }
+    }
+
+    
     init() {}
 }

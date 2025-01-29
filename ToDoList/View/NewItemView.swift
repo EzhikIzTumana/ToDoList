@@ -14,12 +14,12 @@ struct NewItemView: View {
             Form {
                 TextField("Title", text: $viewModel.title)
                 
-                DatePicker("Date", selection: $viewModel.dueDate)
+                DatePicker("Date", selection: $viewModel.dueDate, in: Date()..., displayedComponents: .date)
                     .datePickerStyle(GraphicalDatePickerStyle())
                 
                 Button("Save"){
                     let newItem = ToDoListItem(dueDate: viewModel.dueDate.timeIntervalSince1970, title: viewModel.title)
-                        listViewModel.addItem(newItem) // Добавляем задачу в список
+                        listViewModel.addItem(newItem) 
                         newItemPresented = false
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
